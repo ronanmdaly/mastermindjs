@@ -3,7 +3,7 @@ const div_select_colors = document.getElementById('div-select-color');
 const crack_button = document.getElementById('crack-btn');
 
 let codeLength = 4;
-let trys = 8;
+let tries = 8;
 let colors = ['blue', 'yellow', 'orange', 'green', 'red', 'purple'];
 
 let random_code = [];
@@ -17,7 +17,6 @@ function init() {
     crackTry = 1;
     main_display.innerHTML = '';
     div_select_colors.innerHTML = '';
-    //Versuche
     for (let i = 1; i <= trys; i++) {
         let div_try = document.createElement('div');
         div_try.setAttribute('id', 'try-'+i);
@@ -97,7 +96,6 @@ function createCorrectionArray(input_colors_arr) {
     let random_code_copy = [...random_code];
     let correction_Array = [];
     
-    //Richtige Position
     for (let i in random_code_copy) {
         if (random_code_copy[i] == input_colors_arr[i])  {
             random_code_copy[i] = null;
