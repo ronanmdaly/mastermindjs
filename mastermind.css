@@ -1,0 +1,102 @@
+html {
+    background-color: rgb(203, 247, 213);
+}
+
+#game {
+    text-align: center;
+    color: rgb(90, 115, 145);
+    border: 5px solid rgb(65,43,21);
+    background-color: rgb(139, 90, 43);
+    max-width: 400px;
+    margin: 10px auto;
+}
+
+header,
+footer {
+    background-color: rgb(65,43,21);
+    padding: 10px;
+}
+
+main {
+    margin: 10px auto;
+}
+
+.try {
+    display: flex;
+    justify-content: space-around;
+}
+
+.left,
+.right {
+    display: flex;
+}
+
+.left > div,
+.right > div {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: rgb(65,43,21);
+    margin: 5px;
+}
+
+.select-wrapper {
+    border-radius:50%;
+    display:inline-block;
+    overflow:hidden;
+    margin: 5px;
+}
+
+.select-wrapper select {
+    width:35px;
+    height:35px;
+    border:0px;
+    outline:none;
+}
+
+input[type=button] {
+    background-color:rgb(60,60,60);
+    cursor: pointer;
+    color: #cccccc;
+    border-radius: 12px;
+    height:35px;
+    width:100px;
+    margin: 5px auto;
+    transition: 0.5s;
+}
+
+select:hover,
+input:hover {
+    opacity: 0.8;
+}
+
+
+input[type=button]:active {
+    background-color:rgb(3, 156, 3);
+}
+
+
+
+.blue {
+    background-color: blue;
+}
+
+.yellow {
+    background-color: yellow;
+}
+
+.orange {
+    background-color: orange;
+}
+
+.green {
+    background-color: green;
+}
+
+.red {
+    background-color: red;
+}
+
+.purple {
+    background-color: purple;
+}
