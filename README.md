@@ -1,0 +1,2 @@
+# mastermindjs
+Masterming using DOM
