@@ -1,3 +1,27 @@
+class Controller {
+    constructor(game) {
+        this.game = game;
+    }
+
+    processGuess(input_colors) {
+        let correctionArray = this.game.createCorrectionArray(input_colors);
+        this.game.board.show('right', correctionArray, this.game.checkTry);
+        this.game.checkTry++;
+        this.checkWin(correctionArray);
+    }
+
+    checkWin(correctionArray) {
+        let correctCount = correctionArray.filter(color => color === 'red').length;
+        if (correctCount === this.game.length) {
+            alert('You won!');
+            this.game.init();
+        } else if (this.game.checkTry > this.game.trys) {
+            alert('You lose!');
+            this.game.init();
+        }
+    }
+}
+
 class Game {
     constructor() {
         this.main_display = document.querySelector('main');
@@ -8,8 +32,9 @@ class Game {
         this.colors = ['blue', 'yellow', 'orange', 'green', 'red', 'purple'];
         this.random_code = [];
         this.checkTry = 1;
-        this.setupListeners();  
+        this.controller = new Controller(this);
         this.init();
+        this.setupListeners();
     }
 
     init() {
@@ -26,12 +51,10 @@ class Game {
         this.crack_button.addEventListener('click', () => {
             let input_colors = Array.from(this.div_select_colors.querySelectorAll('select')).map(select => select.value);
             this.board.show('left', input_colors, this.checkTry);
-            let correctionArray = this.createCorrectionArray(input_colors);
-            this.board.show('right', correctionArray, this.checkTry);
-            this.checkTry++;
-            this.checkWin(correctionArray);
+            this.controller.processGuess(input_colors);
         });
     }
+
 
     createRandomCode() {
         let random_code = [];
