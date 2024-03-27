@@ -3,19 +3,20 @@ class Controller {
         this.game = game;
     }
 
+    //takes in guess and makes feedback for the user
     processGuess(input_colors) {
         let correctionArray = this.game.createCorrectionArray(input_colors);
         this.game.board.show('right', correctionArray, this.game.checkTry);
         this.game.checkTry++;
         this.checkWin(correctionArray);
     }
-
+    //  checks if the user has won or lost
     checkWin(correctionArray) {
         let correctCount = correctionArray.filter(color => color === 'red').length;
         if (correctCount === this.game.length) {
             alert('You won!');
             this.game.init();
-        } else if (this.game.checkTry > this.game.trys) {
+        } else if (this.game.checkTry > this.game.tries) {
             alert('You lose!');
             this.game.init();
         }
@@ -28,7 +29,7 @@ class Game {
         this.div_select_colors = document.getElementById('div-select-color');
         this.crack_button = document.getElementById('crack-btn');
         this.length = 4;
-        this.trys = 8;
+        this.tries = 8;
         this.colors = ['blue', 'yellow', 'orange', 'green', 'red', 'purple'];
         this.random_code = [];
         this.checkTry = 1;
@@ -37,16 +38,18 @@ class Game {
         this.setupListeners();
     }
 
+    // Initializes the game and sets the board from the board class
     init() {
         this.random_code = this.createRandomCode();
         this.checkTry = 1;
         this.main_display.innerHTML = '';
         this.div_select_colors.innerHTML = '';
-        this.board = new Board(this.main_display, this.trys, this.length);
+        this.board = new Board(this.main_display, this.tries, this.length);
         this.board.createTries();
         this.createColorSelectors();
     }
 
+    // Adds event listeners to each button
     setupListeners() {
         this.crack_button.addEventListener('click', () => {
             let input_colors = Array.from(this.div_select_colors.querySelectorAll('select')).map(select => select.value);
@@ -55,7 +58,7 @@ class Game {
         });
     }
 
-
+    // Generates random code
     createRandomCode() {
         let random_code = [];
         for (let i = 0; i < this.length; i++) {
@@ -65,7 +68,7 @@ class Game {
         console.log(random_code);
         return random_code;
     }
-
+    //  Creates dropdowns containing the colors the user can select
     createColorSelectors() {
         for (let i = 0; i < this.length; i++) {
             let div_select_wrapper = document.createElement('div');
@@ -88,7 +91,7 @@ class Game {
             this.div_select_colors.appendChild(div_select_wrapper);
         }
     }
-
+    // Adds event listeners to each button
     setupListeners() {
         this.crack_button.addEventListener('click', () => {
             let input_colors = Array.from(this.div_select_colors.querySelectorAll('select')).map(select => select.value);
@@ -99,7 +102,7 @@ class Game {
             this.checkWin(correctionArray);
         });
     }
-
+    // Creates array showing red, white, black feedback for the user
     createCorrectionArray(input_colors_arr) {
         let red_pegs = [];
         let white_pegs = [];
@@ -127,13 +130,13 @@ class Game {
         let correction_Array = red_pegs.concat(white_pegs).concat(black_pegs.slice(0, this.length - red_pegs.length - white_pegs.length));
         return correction_Array;
     }
-
+    //  checks if the user has won or lost
     checkWin(correctionArray) {
         let correctCount = correctionArray.filter(color => color === 'red').length;
         if (correctCount === this.length) {
             alert('You won!');
             this.init();
-        } else if (this.checkTry > this.trys) {
+        } else if (this.checkTry > this.tries) {
             alert('You lose!');
             this.init();
         }
@@ -141,14 +144,15 @@ class Game {
 }
 
 class Board {
-    constructor(main_display, trys, length) {
+    constructor(main_display, tries, length) {
         this.main_display = main_display;
-        this.trys = trys;
+        this.tries = tries;
         this.length = length;
     }
 
+    //createTries(): sets up html for the grid
     createTries() {
-        for (let i = 1; i <= this.trys; i++) {
+        for (let i = 1; i <= this.tries; i++) {
             let div_try = document.createElement('div');
             div_try.id = 'try-' + i;
             div_try.className = 'try';
@@ -167,7 +171,7 @@ class Board {
             this.main_display.appendChild(div_try);
         }
     }
-
+    //shows colors for each try
     show(side, colors, checkTry) {
         const tryDiv = this.main_display.querySelector(`#try-${checkTry} .${side}`);
         const divs = tryDiv.querySelectorAll('div');
