@@ -8,6 +8,7 @@ class Game {
         this.colors = ['blue', 'yellow', 'orange', 'green', 'red', 'purple'];
         this.random_code = [];
         this.checkTry = 1;
+        this.setupListeners();  
         this.init();
     }
 
@@ -19,7 +20,17 @@ class Game {
         this.board = new Board(this.main_display, this.trys, this.length);
         this.board.createTries();
         this.createColorSelectors();
-        this.setupListeners();
+    }
+
+    setupListeners() {
+        this.crack_button.addEventListener('click', () => {
+            let input_colors = Array.from(this.div_select_colors.querySelectorAll('select')).map(select => select.value);
+            this.board.show('left', input_colors, this.checkTry);
+            let correctionArray = this.createCorrectionArray(input_colors);
+            this.board.show('right', correctionArray, this.checkTry);
+            this.checkTry++;
+            this.checkWin(correctionArray);
+        });
     }
 
     createRandomCode() {
@@ -138,10 +149,8 @@ class Board {
         const tryDiv = this.main_display.querySelector(`#try-${checkTry} .${side}`);
         const divs = tryDiv.querySelectorAll('div');
 
-        // Clear previous colors
         divs.forEach(div => div.style.backgroundColor = '');
 
-        // Set new colors
         colors.forEach((color, index) => {
             if (divs[index]) {
                 divs[index].style.backgroundColor = color;
@@ -150,5 +159,4 @@ class Board {
     }
 }
 
-// Instantiate and start the game
 const game = new Game();
